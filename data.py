@@ -25,6 +25,7 @@ class Dataset:
                 self.data[:, i] = divide((self.data[:, i] - mean[i]), denominator[i])
 
 class Normalizator():
+    """Initialize with training data, it will get normalized, then use normalize functions for other datasets"""
     def __init__(self,dataset,method="standarization"):
         self.train_data = dataset.data
         self.size = self.train_data.shape
