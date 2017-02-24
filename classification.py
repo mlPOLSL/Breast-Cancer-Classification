@@ -1,9 +1,10 @@
 from loadDataset import readFromCSV
 from sklearn.neural_network import MLPClassifier
-
+from data import Dataset
 dataset = readFromCSV('\t')
-
-classifier = MLPClassifier((20, 10), learning_rate_init=0.04, momentum=0.4)
-classifier.fit(dataset[0][:, 0:8], dataset[0][:, 9])
-print classifier.score(dataset[1][:, 0:8], dataset[1][:, 9])
-print classifier.n_iter_
+train_data = Dataset(dataset[0])
+test_data = Dataset(dataset[1])
+classifier = MLPClassifier((20, 10), learning_rate_init=0.001, max_iter=1000 )
+classifier.fit(train_data.get_features(), train_data.get_classes())
+print(classifier.score(test_data.get_features(), test_data.get_classes()))
+print(classifier.n_iter_)
