@@ -1,5 +1,5 @@
 from loadDataset import readFromCSV
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import AdaBoostClassifier
 from time import time
 from data import Dataset
 from saveResults import saveResults
@@ -7,7 +7,7 @@ for i in range(0,5,1):
     dataset = readFromCSV('\t')
     train_data = Dataset(dataset[0])
     test_data = Dataset(dataset[1])
-    classifier = RandomForestClassifier()
+    classifier = AdaBoostClassifier()
     time0 = time()
     classifier.fit(train_data.get_features(), train_data.get_classes())
     classifierName = type(classifier).__name__
