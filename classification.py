@@ -1,10 +1,18 @@
 from loadDataset import readFromCSV
-from sklearn.neural_network import MLPClassifier
+from sklearn.ensemble import RandomForestClassifier
+from time import time
 from data import Dataset
-dataset = readFromCSV('\t')
-train_data = Dataset(dataset[0])
-test_data = Dataset(dataset[1])
-classifier = MLPClassifier((20, 10), learning_rate_init=0.001, max_iter=1000 )
-classifier.fit(train_data.get_features(), train_data.get_classes())
-print(classifier.score(test_data.get_features(), test_data.get_classes()))
-print(classifier.n_iter_)
+from saveResults import saveResults
+for i in range(0,5,1):
+    dataset = readFromCSV('\t')
+    train_data = Dataset(dataset[0])
+    test_data = Dataset(dataset[1])
+    classifier = RandomForestClassifier()
+    time0 = time()
+    classifier.fit(train_data.get_features(), train_data.get_classes())
+    classifierName = type(classifier).__name__
+    accuracy = (classifier.score(test_data.get_features(), test_data.get_classes()))
+    nIter = '---'
+    # nIter = (classifier.n_iter_)
+    print "Accuracy: ", accuracy
+    saveResults(classifierName,accuracy,train_data.size[0],test_data.size[0],time()-time0,nIter)
